@@ -2,17 +2,16 @@
 
 -module(client).
 -include("data.hrl").
--export([open_account/2, transfer/3, bank_statement/1, person/3]).
+-export([open_account/2, transfer/3, bank_statement/1,initData/0]).
 
 
-% TODO: Event-Generator für Person
-person(PId,Fname, Sname) ->
-Id = PId,
-Name = Fname,
-Lname = Sname.
-% TODO: Event-Generator für Account
-
-% TODO: Event-Generator für Transfer
+initData() ->
+    business_logic:person_created(10, "Reza", "Fa"),
+    business_logic:person_created(15, "Marcus", "Fey"),
+    business_logic:account_created(100, 10, 20000),
+    business_logic:account_created(200, 15,  5000),
+    business_logic:transfer_created(1000, 200, 100, 400, erlang:timestamp()),
+    business_logic:transfer_created(1001, 100, 200, 30, erlang:timestamp()).
 
 
 %% returns the name of the person associated to the account 
