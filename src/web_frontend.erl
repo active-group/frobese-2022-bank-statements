@@ -168,12 +168,13 @@ head_template() ->
       box-sizing: border-box;
       width:100%;
       max-width: 900px;
-      min-height: 600px;
+      min-height: fit-content;
       background-color: #fff;
       padding: 2rem;
       border-radius: 1rem;
       display: flex;
       flex-direction:column;
+      justify-content: center;
     }
 
     .user-name {
@@ -190,6 +191,11 @@ head_template() ->
       margin-bottom: 1.5rem;
     } 
     
+    span {
+      color: red;
+      font-wight: bolder;
+      padding-right:0.2rem;
+    }
 
     .btn {
       margin: 0 auto;
@@ -219,23 +225,18 @@ head_template() ->
     border-color: #7ea8f8;
     border-style: solid;
     color: #000000;
+    text-align:center;
   }
 
   table.customTable td, table.customTable th {
     border-width: 2px;
-    border-color: #7ea8f8;
+    border-color: #000;
     border-style: solid;
-    padding: 5px;
+    padding: 15px 5px;
   }
 
-  table.customTable thead {
-    background-color: #7ea8f8;
-  }
-
-  span {
-    color: red;
-    font-wight: bolder;
-    padding-right:0.2rem;
+  table.customTable th {
+    background-color: #D3D3D3;
   }
 
     @keyframes GradientBackground {
@@ -254,8 +255,8 @@ head_template() ->
 </style>
 
 <div class='container'>
-    <p class='user-name'> <span>Name:</span> ~s </p>
-    <p class='user-balance'><span>Balance:</span> ~s </p>
+    <h2 class='user-name'> <span>Name:</span> ~s </h2>
+    <h3 class='user-balance'><span>Balance:</span> ~s </h3>
     <table class='customTable'>
       <tr>
         <th>ID</th>
