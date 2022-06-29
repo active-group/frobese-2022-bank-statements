@@ -265,14 +265,14 @@ head_template() ->
         <th>Sender</th>
         <th>Receiver</th>
       </tr> 
-</div>
+
       ".
 
 back_button() ->
     "<a class='btn' href=\"/\">Back </a>".
 
 footer_template() ->
-    "</table>" ++ back_button().
+    "</table>" ++ back_button() ++ "</div>".
 
 
 -spec head(#account{}, string(), number_formatter:locale()) -> string().
