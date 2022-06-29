@@ -1,0 +1,19 @@
+2022-06-29 11:10:13 UTC =CRASH REPORT====
+  crasher:
+    initial call: cowboy_stream_h:request_process/3
+    pid: <0.1860.0>
+    registered_name: []
+    exception error: {{badkey,<<"bank_statement_accountnumber">>},[{erlang,map_get,[<<"bank_statement_accountnumber">>,#{}],[{error_info,#{module => erl_erts_errors}}]},{web_frontend,init,2,[{file,"/workspaces/frobese-2022-bank-statements/src/web_frontend.erl"},{line,246}]},{cowboy_handler,execute,2,[{file,"/workspaces/frobese-2022-bank-statements/_build/default/lib/cowboy/src/cowboy_handler.erl"},{line,37}]},{cowboy_stream_h,execute,3,[{file,"/workspaces/frobese-2022-bank-statements/_build/default/lib/cowboy/src/cowboy_stream_h.erl"},{line,306}]},{cowboy_stream_h,request_process,3,[{file,"/workspaces/frobese-2022-bank-statements/_build/default/lib/cowboy/src/cowboy_stream_h.erl"},{line,295}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}
+    ancestors: [<0.1859.0>,<0.1362.0>,<0.1361.0>,ranch_sup,<0.1338.0>]
+    message_queue_len: 0
+    messages: []
+    links: [<0.1859.0>]
+    dictionary: []
+    trap_exit: false
+    status: running
+    heap_size: 1598
+    stack_size: 28
+    reductions: 4324
+  neighbours:
+2022-06-29 11:10:13 UTC =ERROR REPORT====
+Ranch listener my_http_listener, connection process <0.1859.0>, stream 1 had its request process <0.1860.0> exit with reason {badkey,<<"bank_statement_accountnumber">>} and stacktrace [{erlang,map_get,[<<"bank_statement_accountnumber">>,#{}],[{error_info,#{module => erl_erts_errors}}]},{web_frontend,init,2,[{file,"/workspaces/frobese-2022-bank-statements/src/web_frontend.erl"},{line,246}]},{cowboy_handler,execute,2,[{file,"/workspaces/frobese-2022-bank-statements/_build/default/lib/cowboy/src/cowboy_handler.erl"},{line,37}]},{cowboy_stream_h,execute,3,[{file,"/workspaces/frobese-2022-bank-statements/_build/default/lib/cowboy/src/cowboy_stream_h.erl"},{line,306}]},{cowboy_stream_h,request_process,3,[{file,"/workspaces/frobese-2022-bank-statements/_build/default/lib/cowboy/src/cowboy_stream_h.erl"},{line,295}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]

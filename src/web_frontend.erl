@@ -147,19 +147,128 @@ tx(Tx, Currency, Format) ->
     io_lib:format(tx_template(), [Id, Date, Amount, Name1, Name2]).
 
 head_template() ->
-    "<p> Name: ~s </p>
-     <p> Balance: ~s </p>
-     <table>
+    "
+    <style>
+    body {
+      box-sizing: border-box;
+      height:96vh;
+      background: linear-gradient(8deg, #D62778, #73656B, #19C4BE);
+      background-size: 800% 800%;
+      animation: GradientBackground 6s ease infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      
+    }
+
+    .container {
+      margin-top: 5rem;
+      margin-bottom: 5rem;
+      box-sizing: border-box;
+      width:100%;
+      max-width: 900px;
+      min-height: 600px;
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 1rem;
+      display: flex;
+      flex-direction:column;
+    }
+
+    .user-name {
+      text-aligh: center;
+      margin:0;
+      padding:0;
+      margin-bottom: 0.3rem; 
+    }
+  
+    .user-balance {
+      text-aligh: center;
+      margin:0;
+      padding:0;
+      margin-bottom: 1.5rem;
+    } 
+    
+
+    .btn {
+      margin: 0 auto;
+      margin-top:2rem;
+      padding: 15px 25px;
+      border: 0;
+      background-color: #000;
+      color:#fff;
+      border-radius: .5rem;
+      transition: .3s all ease;
+      cursor: pointer;
+      position: relative;
+      text-decoration: none;      
+      text-align: center; !important
+    }
+    .btn:hover {
+      background-color: #fc6203;
+      transition: .3s all ease;
+
+    }
+
+  table.customTable {
+    width: 100%;
+    background-color: #FFFFFF;
+    border-collapse: collapse;
+    border-width: 2px;
+    border-color: #7ea8f8;
+    border-style: solid;
+    color: #000000;
+  }
+
+  table.customTable td, table.customTable th {
+    border-width: 2px;
+    border-color: #7ea8f8;
+    border-style: solid;
+    padding: 5px;
+  }
+
+  table.customTable thead {
+    background-color: #7ea8f8;
+  }
+
+  span {
+    color: red;
+    font-wight: bolder;
+    padding-right:0.2rem;
+  }
+
+    @keyframes GradientBackground {
+      0% {
+        background-position: 0% 50%;
+      }
+    
+      50% {
+        background-position: 100% 50%;
+      }
+    
+      100% {
+        background-position: 0% 50%;
+      }
+    };
+</style>
+
+<div class='container'>
+    <p class='user-name'> <span>Name:</span> ~s </p>
+    <p class='user-balance'><span>Balance:</span> ~s </p>
+    <table class='customTable'>
       <tr>
         <th>ID</th>
         <th>Date</th>
         <th>Amount</th>
         <th>Sender</th>
         <th>Receiver</th>
-      </tr> ".
+      </tr> 
+</div>
+      ".
 
 back_button() ->
-    "<a href=\"/\">Back </a>".
+    "<a class='btn' href=\"/\">Back </a>".
 
 footer_template() ->
     "</table>" ++ back_button().
