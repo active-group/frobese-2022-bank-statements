@@ -16,8 +16,8 @@ get_person(Id) -> database:get_person(Id).
 get_account(AccountNr) -> database:get_account(AccountNr).
 
 -spec get_transfers(unique_id()) -> list(#transfer{}).
-get_transfers(Id) ->
-     database:get_all_transfers(Id).
+get_transfers(AccountId) ->
+     database:get_all_transfers(AccountId).
 
 sort_tx(Txs) ->
   lists:sort(fun(Tx1, Tx2) -> Tx2#transfer.id < Tx1#transfer.id end, Txs).
@@ -42,22 +42,30 @@ account_created(AccNr, PersId, InitAmount) ->
     Acc.
 
 %% Saves transfer created events into local DB. Adjusts account amounts as necessary. No validation whatsoever
--spec transfer_created(account_number(), account_number(), money(),unique_id(), timeout()) -> ok.
-transfer_created(SenderAccountNumber, ReceiverAccountNumber, Amount, TxId, Timestamp) ->
+-spec transfer_created(unique_id(), account_number(), account_number(), money(),erlang:timestamp()) 
+  -> {error, sender_account_not_found | receiver_account_not_found} | {ok}.
+transfer_created(TxId, SenderAccountNumber, ReceiverAccountNumber, Amount,  Timestamp) ->
   Transfer = 
       fun() -> 
-        AccSender = database:get_account(SenderAccountNumber),
-        AccReceiver = database:get_account(ReceiverAccountNumber),
-        NewAccSender = AccSender#account{amount = (AccSender#account.amount - Amount)},
-        NewAccReceiver = AccReceiver#account{amount = (AccReceiver#account.amount + Amount)},
-        Tx = #transfer{id = TxId,
-                            timestamp = Timestamp,
-                            from_acc_nr = SenderAccountNumber,
-                            to_acc_nr = ReceiverAccountNumber,
-                            amount = Amount},
-        database:put_transfer(Tx),
-        database:put_account(NewAccSender),
-        database:put_account(NewAccReceiver)
+        MaybeAccSender = database:get_account(SenderAccountNumber),
+        MaybeAccReceiver = database:get_account(ReceiverAccountNumber),
+        case {MaybeAccSender, MaybeAccReceiver} of
+          {{error, not_found}, _} -> {error, sender_account_not_found};
+          {_, {error, not_found}} -> {error, receiver_account_not_found};
+          
+          {{ok, AccSender}, {ok, AccReceiver}} ->
+            NewAccSender = AccSender#account{amount = (AccSender#account.amount - Amount)},
+            NewAccReceiver = AccReceiver#account{amount = (AccReceiver#account.amount + Amount)},
+            Tx = #transfer{id = TxId,
+                                timestamp = Timestamp,
+                                from_acc_nr = SenderAccountNumber,
+                                to_acc_nr = ReceiverAccountNumber,
+                                amount = Amount},
+            database:put_transfer(Tx),
+            database:put_account(NewAccSender),
+            database:put_account(NewAccReceiver),
+            {ok}
+          end
       end,
   database:atomically(Transfer).
 

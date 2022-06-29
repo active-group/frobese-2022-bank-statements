@@ -2,8 +2,17 @@
 
 -module(client).
 -include("data.hrl").
--export([open_account/2, transfer/3, bank_statement/1]).
+-export([open_account/2, transfer/3, bank_statement/1, person/3]).
 
+
+% TODO: Event-Generator für Person
+person(PId,Fname, Sname) ->
+Id = PId,
+Name = Fname,
+Lname = Sname.
+% TODO: Event-Generator für Account
+
+% TODO: Event-Generator für Transfer
 
 
 %% returns the name of the person associated to the account 
