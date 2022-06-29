@@ -1,1 +1,4 @@
 _build
+account.dets
+person.dets
+transfer.dets

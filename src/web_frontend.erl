@@ -1,4 +1,3 @@
-
 -module(web_frontend).
 -include("data.hrl").
 -export([init/2]).
@@ -13,44 +12,98 @@ bin_to_int(B) ->
 
 bank_statement_form() ->
     << "
-<h3> Request bank-statement </h3>
-  <form method=\"post\" action=\"/bank-statements/request\">
-  <table>
-       <tr>
-       <td>
-         <label for=\"bank_statement_accountnumber\"> Account number </label>
-       </td>
-       <td>
-         <input type=\"text\" id=\"bank_statement_accountnumber\" 
-                name=\"bank_statement_accountnumber\" />
-       </td>
-       </tr>
+    <style>
+        body {
+          box-sizing: border-box;
+          height:96vh;
+          background: linear-gradient(8deg, #D62778, #73656B, #19C4BE);
+          background-size: 800% 800%;
+          animation: GradientBackground 6s ease infinite;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          
+        }
+        h2 {
+          text-align: center;
+          padding-bottom: 2rem;
+        }
+        .container {
+          box-sizing: border-box;
+          min-width: 400px;
+          background-color: #fff;
+          padding: 2rem;
+          border-radius: 1rem;
+          display: flex;
+          flex-direction:column;
+        }
 
-       <tr>
-       <td>
-         <label for=\"bank_statement_currency\"> Currency </label>
-       </td>
-       <td>
-         <input type=\"text\" id=\"bank_statement_currency\" name=\"bank_statement_currency\"
-                value=\"EUR\" size=3/>
-       </td>
-       </tr>
+        .container > form {
+          box-sizing: border-box;
+          display: flex;
+          flex-direction:column;
+          gap:0.3rem;
+        }
+        
+        form > input,form > select {
+          height: 2rem;
+          margin-bottom: 1.2rem;
+        }
 
-       <tr>
-       <td>
-         <label for=\"bank_statement_format\"> Number & date formatting </label>
-       </td>
-       <td>
-         <select id=\"bank_statement_format\" name=\"bank_statement_format\">
-           <option value=\"de\" selected>DE</option>
-           <option value=\"en\">EN</option>
-         </select>
-       </td>
-       </tr>
-   </table>
+        form > button {
+          width: 150px;
+          height: 45px;
+          margin: 0 auto;
+          margin-top:2rem;
+          border: 0;
+          background-color: #000;
+          color:#fff;
+          border-radius: .5rem;
+          transition: .3s all ease;
+          cursor: pointer;
+        }
+        form > button:hover {
+          background-color: #fc6203;
+          transition: .3s all ease;
 
-  <input type=\"submit\" value=\"Request bank-statement\" />
-</form>" >>.
+        }
+
+        @keyframes GradientBackground {
+          0% {
+            background-position: 0% 50%;
+          }
+        
+          50% {
+            background-position: 100% 50%;
+          }
+        
+          100% {
+            background-position: 0% 50%;
+          }
+        };
+
+   </style>
+
+
+
+    <div class='container'>
+      <h2> Request bank statement </h2>
+      <form method=\"post\" action=\"/bank-statements/request\">
+          <label for=\"bank_statement_accountnumber\"> Account number </label>
+          <input type=\"text\" id=\"bank_statement_accountnumber\" 
+          name=\"bank_statement_accountnumber\" />
+          <label for=\"bank_statement_currency\"> Currency </label>
+          <input type=\"text\" id=\"bank_statement_currency\" name=\"bank_statement_currency\"
+          value=\"EUR\" size=3/>
+          <label for=\"bank_statement_format\"> Number & date formatting </label>
+          <select id=\"bank_statement_format\" name=\"bank_statement_format\">
+          <option value=\"de\" selected>DE</option>
+          <option value=\"en\">EN</option>
+          </select>
+          <button> Send Request </button>
+      </form>
+    </div>" >>.
 
 
 -spec tx_template() -> string().
