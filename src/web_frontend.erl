@@ -170,7 +170,7 @@ head_template() ->
       max-width: 900px;
       min-height: fit-content;
       background-color: #fff;
-      padding: 2rem;
+      padding: 2.5rem;
       border-radius: 1rem;
       display: flex;
       flex-direction:column;
@@ -192,7 +192,7 @@ head_template() ->
     } 
     
     span {
-      color: red;
+      color: #704b12;
       font-wight: bolder;
       padding-right:0.2rem;
     }
