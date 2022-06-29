@@ -5,61 +5,9 @@
 
 
 
-account_opened_success() ->
-    << "
-      <p> Account with account number ~p was opened successfully </p> ~n
-       <a href=\"/\"> Back </a>
-    " >>.
-
-
-account_open_form() ->
-            << "
-<h3> Open Account </h3>
-               <form method=\"post\" action=\"/accounts/open\">
-  <label for=\"accounts_firstname\"> Firstname </label>
-  <input type=\"text\" id=\"accounts_firstname\" name=\"accounts_firstname\" />
-
-  <label for=\"accounts_secondname\"> Secondname </label>
-  <input type=\"text\" id=\"accounts_secondname\" name=\"accounts_secondname\" />
-
-  <input type=\"submit\" value=\"Open account\" />
-</form>" >>.
-
-
 -spec bin_to_int(binary()) -> integer().
 bin_to_int(B) ->
     erlang:list_to_integer(binary:bin_to_list(B)).
-
--spec transfer_error() -> binary().
-transfer_error() ->
-    << "
-      <p> An error occured: ~p </p> ~n
-       <a href=\"/\"> Back </a>
-    " >>.
-
--spec transfer_success() -> binary().
-transfer_success() ->
-            << "
-      <p> Transfer with id ~p successfully created </p> ~n
-               <a href=\"/\"> Back </a>
-    " >>.
-
-
-transfer_form() ->
-                    << "
-<h3> Create transfer </h3>
-                       <form method=\"post\" action=\"/transfers/create\">
-  <label for=\"transfers_from\"> From (account number) </label>
-  <input type=\"text\" id=\"transfers_from\" name=\"transfers_from\" />
-
-  <label for=\"transfers_to\"> To (account number) </label>
-  <input type=\"text\" id=\"transfers_to\" name=\"transfers_to\" />
-
-  <label for=\"transfers_amount\"> Amount </label>
-  <input type=\"text\" id=\"transfers_amount\" name=\"transfers_amount\" />
-
-  <input type=\"submit\" value=\"Create transfer\" />
-</form>" >>.
 
 
 
@@ -178,10 +126,8 @@ statement(Account, Txs, Currency, Format) ->
 
 
 index() ->
-    io_lib:format("~s~s~s",
-                  [account_open_form(),
-                   transfer_form(),
-                   bank_statement_form()]).
+    io_lib:format("~s",
+                  [bank_statement_form()]).
 
 %% /bank-statements/request
 init(Req, request_bank_statement) ->
@@ -213,46 +159,6 @@ init(Req, request_bank_statement) ->
                                     "Account not found.<br/>" ++ back_button(), Req),
             {ok, Req2, []}
     end;
-
-
-%% /transfers/create
-init(Req, create_transfer) ->
-
-    {ok, KeyValuesL, _} = cowboy_req:read_urlencoded_body(Req),
-
-    KeyValues = maps:from_list(KeyValuesL),
-    SenderAccountNumber =  bin_to_int(maps:get(<<"transfers_from">>, KeyValues)),
-    ReceiverAccountNumber = bin_to_int(maps:get(<<"transfers_to">>, KeyValues)),
-    Amount = bin_to_int(maps:get(<<"transfers_amount">>, KeyValues)),
-
-    Body = case business_logic:transfer(SenderAccountNumber, ReceiverAccountNumber, Amount) of
-               {ok, TxId} ->
-                   io_lib:format(transfer_success(), [TxId]);
-               {error, Err} ->
-                   io_lib:format(transfer_error(), [Err])
-           end,
-    Req2 = cowboy_req:reply(200, #{<<"content-type">> => <<"text/html">>}, Body, Req),
-    {ok, Req2, []};
-
-%% /accounts/open
-init(Req, open_account) ->
-
-    lager:info("Creating new account"),
-
-    {ok, KeyValuesL, _} = cowboy_req:read_urlencoded_body(Req),
-
-    KeyValues = maps:from_list(KeyValuesL),
-    Firstname = maps:get(<<"accounts_firstname">>, KeyValues),
-    Secondname = maps:get(<<"accounts_secondname">>, KeyValues),
-
-    Account = business_logic:open_account(Firstname, Secondname),
-    Body = io_lib:format(account_opened_success(), [Account#account.account_number]),
-
-    Req2 = cowboy_req:reply(200, #{<<"content-type">> => <<"text/html">>}, Body, Req),
-
-    lager:info("Created account with account number ~p", [Account#account.account_number]),
-
-    {ok, Req2, []};
 
 %% /index
 init(Req0, index) ->

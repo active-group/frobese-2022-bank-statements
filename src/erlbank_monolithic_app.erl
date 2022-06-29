@@ -15,8 +15,6 @@
 start_cowboy() ->
     %% Cowboy test code
     Dispatch = cowboy_router:compile([{'_', [{"/", web_frontend, index},
-                                             {"/accounts/open", web_frontend, open_account},
-                                             {"/transfers/create", web_frontend, create_transfer},
                                              {"/bank-statements/request", web_frontend, request_bank_statement}]}]),
 
     {ok, _} = cowboy:start_clear(my_http_listener,
