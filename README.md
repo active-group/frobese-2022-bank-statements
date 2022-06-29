@@ -1,4 +1,4 @@
-# Erlbank Monolithic
+# Erlbank bank statements
 
 Erlbank Legacy System
 
