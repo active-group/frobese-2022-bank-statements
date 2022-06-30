@@ -1,7 +1,4 @@
 _build
-*/*.dets
-*/*.log
 account.dets
 person.dets
 transfer.dets
-log/crash.log
