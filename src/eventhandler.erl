@@ -48,9 +48,9 @@ handle_cast({account_service,
     end,
     {noreply,Nodes};
 handle_cast({transfer_service, 
-                count=Count, 
+                Count, 
                 {transferEvent, % <--record name
-                    id=Id ,from_acc_nr=FromAccNr, to_acc_nr=ToAccNr, amount=Amount }} , Nodes) ->
+                    Id ,FromAccNr, ToAccNr, Amount }} , Nodes) ->
     ExpectedCount = database:last_transfer_service_count() + 1,
     if 
         ExpectedCount == Count ->
