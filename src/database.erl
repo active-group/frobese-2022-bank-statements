@@ -6,12 +6,18 @@
          put_account/1, get_account/1, get_all_accounts/0,
          put_transfer/1, get_transfer/1, get_all_transfers/0, get_all_transfers/1, 
          unique_account_number/0,unique_tx_id/0, 
-         atomically/1]).
+         atomically/1
+        ,last_account_service_count/0
+        ,last_transfer_service_count/0
+        ,inc_last_account_service_count/0
+        ,inc_last_transfer_service_count/0
+    ]).
 
 close_tables() ->
     dets:close(transfer),
     dets:close(account),
     dets:close(event),
+    dets:close(last_event_count),
     dets:close(table_id).
 
 %% destroy tables in case they already existed
@@ -19,6 +25,7 @@ destroy_tables() ->
     file:delete("transfer.dets"),
     file:delete("account.dets"),
     file:delete("event.dets"),
+    file:delete("last_event_count.dets"),
     file:delete("table_id.dets").
 
 % unfortunately, delete_table doesn't always work such that create_table doesn't fail, so don't check return value
@@ -26,10 +33,13 @@ create_tables() ->
     {ok, transfer} = dets:open_file(transfer, [{type, set}, {file, "transfer.dets"}]),
     {ok, account} = dets:open_file(account, [{type, set}, {file, "account.dets"}]),
     {ok, event} = dets:open_file(event, [{type, set}, {file, "event.dets"}]),
+    {ok, last_event_count} = dets:open_file(last_event_count, [{type, set}, {file, "last_event_count.dets"}]),
     {ok, table_id} = dets:open_file(table_id, [{type, set}, {file, "table_id.dets"}]),
     dets:insert(table_id, {transfer, 0}),
     dets:insert(table_id, {account, 0}),
-    dets:insert(table_id, {event, 0}).
+    dets:insert(table_id, {event, 0}),
+    dets:insert(last_event_count, {account_servicec, 0}),
+    dets:insert(last_event_count, {transfer_service, 0}).
 
 init_database() ->
     close_tables(),
@@ -101,6 +111,24 @@ unique_account_number() -> dets:update_counter(table_id, account, 1).
 
 -spec unique_tx_id() -> unique_id().
 unique_tx_id() -> dets:update_counter(table_id, transfer, 1).
+
+
+% ----- get last known count 
+last_account_service_count() ->
+    read_one(last_event_count, account_service, fun deserialize_last_event_count_int_only/1 ).
+deserialize_last_event_count_int_only({_,Count}) ->
+    Count.
+
+-spec last_transfer_service_count() -> integer().
+last_transfer_service_count() ->
+    read_one(last_event_count, transfer_service, fun deserialize_last_event_count_int_only/1 ).
+-spec last_account_service_count() -> integer().
+
+
+-spec inc_last_account_service_count() -> ok.
+inc_last_account_service_count() -> write(last_event_count, {account_service, last_account_service_count() + 1 }).
+-spec inc_last_transfer_service_count() -> ok.
+inc_last_transfer_service_count() -> write(last_event_count, {transfer_service, last_transfer_service_count() + 1 }).
 
 % holdover from Mnesia
 -spec atomically(fun(() -> Ret)) -> Ret.
