@@ -8,7 +8,8 @@
      surname :: binary()}).
 -record(account,
     {account_number :: account_number(),
-     person_id :: unique_id(),
+    firstname :: binary(),
+    surname :: binary(),
      amount :: money()}).
 -record(transfer, 
     {id :: unique_id(), 

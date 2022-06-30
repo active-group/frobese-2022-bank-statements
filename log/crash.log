@@ -74,22 +74,3 @@ Ranch listener my_http_listener, connection process <0.2179.0>, stream 4 had its
   neighbours:
 2022-06-29 12:22:14 UTC =ERROR REPORT====
 Ranch listener my_http_listener, connection process <0.2271.0>, stream 1 had its request process <0.2272.0> exit with reason {badkey,<<"bank_statement_accountnumber">>} and stacktrace [{erlang,map_get,[<<"bank_statement_accountnumber">>,#{}],[{error_info,#{module => erl_erts_errors}}]},{web_frontend,init,2,[{file,"/workspaces/frobese-2022-bank-statements/src/web_frontend.erl"},{line,301}]},{cowboy_handler,execute,2,[{file,"/workspaces/frobese-2022-bank-statements/_build/default/lib/cowboy/src/cowboy_handler.erl"},{line,37}]},{cowboy_stream_h,execute,3,[{file,"/workspaces/frobese-2022-bank-statements/_build/default/lib/cowboy/src/cowboy_stream_h.erl"},{line,306}]},{cowboy_stream_h,request_process,3,[{file,"/workspaces/frobese-2022-bank-statements/_build/default/lib/cowboy/src/cowboy_stream_h.erl"},{line,295}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]
-2022-06-30 06:51:35 UTC =CRASH REPORT====
-  crasher:
-    initial call: cowboy_stream_h:request_process/3
-    pid: <0.319.0>
-    registered_name: []
-    exception error: bad argument: [{erlang,list_to_integer,["hj"],[{error_info,#{module => erl_erts_errors}}]},{web_frontend,bin_to_int,1,[{file,"/workspaces/frobese-2022-bank-statements/src/web_frontend.erl"},{line,9}]},{web_frontend,init,2,[{file,"/workspaces/frobese-2022-bank-statements/src/web_frontend.erl"},{line,301}]},{cowboy_handler,execute,2,[{file,"/workspaces/frobese-2022-bank-statements/_build/default/lib/cowboy/src/cowboy_handler.erl"},{line,37}]},{cowboy_stream_h,execute,3,[{file,"/workspaces/frobese-2022-bank-statements/_build/default/lib/cowboy/src/cowboy_stream_h.erl"},{line,306}]},{cowboy_stream_h,request_process,3,[{file,"/workspaces/frobese-2022-bank-statements/_build/default/lib/cowboy/src/cowboy_stream_h.erl"},{line,295}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]
-    ancestors: [<0.318.0>,<0.299.0>,<0.298.0>,ranch_sup,<0.275.0>]
-    message_queue_len: 0
-    messages: []
-    links: [<0.318.0>]
-    dictionary: []
-    trap_exit: false
-    status: running
-    heap_size: 1598
-    stack_size: 28
-    reductions: 4495
-  neighbours:
-2022-06-30 06:51:35 UTC =ERROR REPORT====
-Ranch listener my_http_listener, connection process <0.318.0>, stream 1 had its request process <0.319.0> exit with reason badarg and stacktrace [{erlang,list_to_integer,["hj"],[{error_info,#{module => erl_erts_errors}}]},{web_frontend,bin_to_int,1,[{file,"/workspaces/frobese-2022-bank-statements/src/web_frontend.erl"},{line,9}]},{web_frontend,init,2,[{file,"/workspaces/frobese-2022-bank-statements/src/web_frontend.erl"},{line,301}]},{cowboy_handler,execute,2,[{file,"/workspaces/frobese-2022-bank-statements/_build/default/lib/cowboy/src/cowboy_handler.erl"},{line,37}]},{cowboy_stream_h,execute,3,[{file,"/workspaces/frobese-2022-bank-statements/_build/default/lib/cowboy/src/cowboy_stream_h.erl"},{line,306}]},{cowboy_stream_h,request_process,3,[{file,"/workspaces/frobese-2022-bank-statements/_build/default/lib/cowboy/src/cowboy_stream_h.erl"},{line,295}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]

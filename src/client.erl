@@ -6,10 +6,8 @@
 
 
 initData() ->
-    business_logic:person_created(10, "Reza", "Fa"),
-    business_logic:person_created(15, "Marcus", "Fey"),
-    business_logic:account_created(100, 10, 20000),
-    business_logic:account_created(200, 15,  5000),
+    business_logic:account_created(100, "Reza", "Fa", 20000),
+    business_logic:account_created(200, "Marcus", "Fey",  5000),
     business_logic:transfer_created(1000, 200, 100, 400, erlang:timestamp()),
     business_logic:transfer_created(1001, 100, 200, 30, erlang:timestamp()).
 
@@ -19,8 +17,7 @@ initData() ->
 -spec name_by_account_nr(account_number()) -> string().
 name_by_account_nr(AccountNumber) ->
     {ok, Account} = business_logic:get_account(AccountNumber),
-    {ok, Person}  = business_logic:get_person(Account#account.person_id),
-    binary_to_list(Person#person.firstname) ++ " " ++ binary_to_list(Person#person.surname).
+    binary_to_list(Account#account.firstname) ++ " " ++ binary_to_list(Account#account.surname).
 
 
 %% opens an acocunt with a given first and surname.

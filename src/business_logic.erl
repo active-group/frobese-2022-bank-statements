@@ -6,7 +6,7 @@
         % previous/reused functions
         get_account/1, get_person/1, sort_tx/1, get_transfers/1 ,
         % new functions
-          person_created/3, account_created/3, transfer_created/5
+          person_created/3, account_created/4, transfer_created/5
 ]).
 
 -spec get_person(unique_id()) -> {ok, #person{} | {error, any()}}.
@@ -32,14 +32,17 @@ person_created(PersId,Firstname, Surname) ->
     database:put_person(Pers),
     Pers.
 
+
 %% Saves account created events into local DB.
--spec account_created(account_number(),unique_id(),money()) ->ok.
-account_created(AccNr, PersId, InitAmount) ->
+-spec account_created(account_number(),binary(), binary(),money()) ->ok.
+account_created(AccNr, Firstname, Surname, InitAmount) ->
     Acc = #account{account_number = AccNr,
-                   person_id = PersId,
+                   firstname= Firstname,
+                   surname= Surname,
                    amount = InitAmount},
     database:put_account(Acc),
     Acc.
+
 
 %% Saves transfer created events into local DB. Adjusts account amounts as necessary. No validation whatsoever
 -spec transfer_created(unique_id(), account_number(), account_number(), money(),erlang:timestamp()) 
