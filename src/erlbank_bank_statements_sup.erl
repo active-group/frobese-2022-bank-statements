@@ -1,9 +1,9 @@
 %%%-------------------------------------------------------------------
-%% @doc erlbank_monolithic top level supervisor.
+%% @doc erlbank_bank_statements top level supervisor.
 %% @end
 %%%-------------------------------------------------------------------
 
--module(erlbank_monolithic_sup).
+-module(erlbank_bank_statements_sup).
 
 -behaviour(supervisor).
 
