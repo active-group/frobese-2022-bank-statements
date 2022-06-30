@@ -39,6 +39,8 @@ start(_StartType, _StartArgs) ->
     AccountNode = list_to_atom("accounts@" ++ os:getenv("ACCOUNTS_HOST")),
     % TransferNode = list_to_atom("transfers@" ++ os:getenv("TRANSFERS_HOST")),
 
+    eventhandler:start(AccountNode, foo),
+
     start_cowboy(),
     erlbank_bank_statements_sup:start_link().
 
