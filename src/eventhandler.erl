@@ -9,11 +9,11 @@
 init(Nodes) ->
     io:format("Nodes: ~w~n", [Nodes]),
     reRegister(Nodes),
-    timer:send_interval(1000, reRegister),
+    timer:send_interval(10000, reRegister),
     {ok, Nodes}. % state is in dets, no real state here
 
 reRegister({AccountsNode, TransferNode}) ->
-    io:format("reRegister~n"),
+    io:format("reRegister at: ~w, ~w ~n", [AccountsNode, TransferNode]),
     gen_server:cast(AccountsNode, {register, self(), database:last_account_service_count()}),
     gen_server:cast(TransferNode, {register, self(), database:last_transfer_service_count()})
     .
