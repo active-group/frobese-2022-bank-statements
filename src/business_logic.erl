@@ -4,13 +4,10 @@
 -include("data.hrl").
 -export([
         % previous/reused functions
-        get_account/1, get_person/1, sort_tx/1, get_transfers/1 ,
+        get_account/1, sort_tx/1, get_transfers/1 ,
         % new functions
-          person_created/3, account_created/4, transfer_created/5
+       account_created/4, transfer_created/5
 ]).
-
--spec get_person(unique_id()) -> {ok, #person{} | {error, any()}}.
-get_person(Id) -> database:get_person(Id).
 
 -spec get_account(account_number()) -> {ok, #account{}} | {error, any()}.
 get_account(AccountNr) -> database:get_account(AccountNr).
@@ -22,15 +19,6 @@ get_transfers(AccountId) ->
 sort_tx(Txs) ->
   lists:sort(fun(Tx1, Tx2) -> Tx2#transfer.id < Tx1#transfer.id end, Txs).
 
-
-%% Saves person created events into local DB. 
--spec person_created(unique_id(), binary(),binary()) -> #person{}.
-person_created(PersId,Firstname, Surname) ->
-    Pers = #person{id = PersId,
-                   firstname = Firstname,
-                   surname = Surname},
-    database:put_person(Pers),
-    Pers.
 
 
 %% Saves account created events into local DB.

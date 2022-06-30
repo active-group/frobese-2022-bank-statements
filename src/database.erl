@@ -4,14 +4,11 @@
 -include("data.hrl").
 -export([init_database/0, write/2, read_all/2,
          put_account/1, get_account/1, get_all_accounts/0,
-         %put_person/1, get_person/1, get_all_persons/0, 
          put_transfer/1, get_transfer/1, get_all_transfers/0, get_all_transfers/1, 
          unique_account_number/0,unique_tx_id/0, 
-         %unique_person_id/0,
          atomically/1]).
 
 close_tables() ->
-    %dets:close(person),
     dets:close(transfer),
     dets:close(account),
     dets:close(event),
@@ -19,7 +16,6 @@ close_tables() ->
 
 %% destroy tables in case they already existed
 destroy_tables() ->
-   % file:delete("person.dets"),
     file:delete("transfer.dets"),
     file:delete("account.dets"),
     file:delete("event.dets"),
@@ -27,12 +23,10 @@ destroy_tables() ->
 
 % unfortunately, delete_table doesn't always work such that create_table doesn't fail, so don't check return value
 create_tables() ->
-    %{ok, person} = dets:open_file(person, [{type, set}, {file, "person.dets"}]),
     {ok, transfer} = dets:open_file(transfer, [{type, set}, {file, "transfer.dets"}]),
     {ok, account} = dets:open_file(account, [{type, set}, {file, "account.dets"}]),
     {ok, event} = dets:open_file(event, [{type, set}, {file, "event.dets"}]),
     {ok, table_id} = dets:open_file(table_id, [{type, set}, {file, "table_id.dets"}]),
-   % dets:insert(table_id, {person, 0}),
     dets:insert(table_id, {transfer, 0}),
     dets:insert(table_id, {account, 0}),
     dets:insert(table_id, {event, 0}).
@@ -76,19 +70,6 @@ get_account(AccountNumber) ->
 -spec get_all_accounts() -> list(#account{}).
 get_all_accounts() -> read_all(account, fun deserialize_account/1).
 
-%-spec put_person(#person{}) -> ok.
-%put_person(#person{id = Id, firstname = Firstname, surname = Surname}) ->
-%    write(person, {Id, Firstname, Surname}).
-
-%deserialize_person({Id, Firstname, Surname}) ->
-%    #person{id = Id, firstname = Firstname, surname = Surname}.
-
-%-spec get_person(unique_id()) -> {ok, #person{} | {error, any()}}.
-%get_person(Id) ->
-%    read_one(person, Id, fun deserialize_person/1).
-
-%-spec get_all_persons() -> list(#person{}).
-%get_all_persons() -> read_all(person, fun deserialize_person/1).
 
 -spec put_transfer(#transfer{}) -> ok.
 put_transfer(#transfer{id = Id, timestamp = Timestamp, from_acc_nr = FromAccNr, to_acc_nr = ToAccNr, amount = Amount}) ->
@@ -117,8 +98,6 @@ get_all_transfers(AccountNr) ->
 -spec unique_account_number() -> unique_id().
 unique_account_number() -> dets:update_counter(table_id, account, 1).
 
-%-spec unique_person_id() -> unique_id().
-%unique_person_id() -> dets:update_counter(table_id, person, 1).
 
 -spec unique_tx_id() -> unique_id().
 unique_tx_id() -> dets:update_counter(table_id, transfer, 1).
