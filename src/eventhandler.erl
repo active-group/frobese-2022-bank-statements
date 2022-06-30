@@ -15,7 +15,7 @@ init(Nodes) ->
 reRegister({AccountsNode, TransferNode}) ->
     io:format("reRegister at: ~w, ~w ~n", [AccountsNode, TransferNode]),
     gen_server:cast({account_feed, AccountsNode}, {register, self(), account_service, database:last_account_service_count()}),
-    gen_server:cast(TransferNode, {register, self(), database:last_transfer_service_count()})
+    gen_server:cast({transfer_feed, TransferNode}, {register, self(), transfer_service, database:last_transfer_service_count()})
     .
 
 
