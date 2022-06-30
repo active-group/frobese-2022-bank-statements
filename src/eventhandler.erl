@@ -37,7 +37,7 @@ handle_cast({account_service,
             {account,  % <--record name
                             account_number=AccNr, name=Name, surname=Surname, amount=Amount}  
         } , _) ->
-    ExpectedCount = database:last_transfer_service_count() + 1,
+    ExpectedCount = database:last_account_service_count() + 1,
     if 
         ExpectedCount == Count ->
                 business_logic:account_created(AccNr, Name,Surname,Amount),
