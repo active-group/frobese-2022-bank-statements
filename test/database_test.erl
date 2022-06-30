@@ -11,8 +11,8 @@ main_test_() ->
     {inorder,
      {foreach,
       fun setup/0,
-      fun cleanup/1,
-      [ fun put_account/1, fun put_transfer/1]
+      fun cleanup/1
+      , [ fun put_account/1, fun put_transfer/1, fun last_event_count/1]
      }}.
 
 
@@ -34,7 +34,19 @@ put_transfer(_) ->
             ?assertEqual(database:get_all_transfers(16), [])
     end.
 
-
+last_event_count(_) ->
+    fun() ->
+        LastAcc1 = database:last_account_service_count(),
+        ?assertEqual(0, LastAcc1),
+        database:inc_last_account_service_count(),
+        LastAcc2 = database:last_account_service_count(),
+        ?assertEqual(1, LastAcc2),
+        LastTx1 = database:last_transfer_service_count(),
+        ?assertEqual(0, LastTx1),
+        database:inc_last_transfer_service_count(),
+        LastTx2 = database:last_transfer_service_count(),
+        ?assertEqual(1, LastTx2)
+    end.        
 
 
 

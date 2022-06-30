@@ -114,15 +114,22 @@ unique_tx_id() -> dets:update_counter(table_id, transfer, 1).
 
 
 % ----- get last known count 
+ 
+-spec last_account_service_count() -> integer().
 last_account_service_count() ->
-    read_one(last_event_count, account_service, fun deserialize_last_event_count_int_only/1 ).
-deserialize_last_event_count_int_only({_,Count}) ->
-    Count.
-
+    case read_one(last_event_count, account_service, fun deserialize_last_event_count_int_only/1 ) of
+        {error, not_found} -> 0;
+        {ok, Count} -> Count
+    end.
 -spec last_transfer_service_count() -> integer().
 last_transfer_service_count() ->
-    read_one(last_event_count, transfer_service, fun deserialize_last_event_count_int_only/1 ).
--spec last_account_service_count() -> integer().
+    case read_one(last_event_count, transfer_service, fun deserialize_last_event_count_int_only/1 ) of
+        {error, not_found} -> 0;
+        {ok, Count} -> Count
+    end.
+
+deserialize_last_event_count_int_only({_,Count}) ->
+    Count.
 
 
 -spec inc_last_account_service_count() -> ok.
