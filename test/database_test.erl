@@ -12,20 +12,13 @@ main_test_() ->
      {foreach,
       fun setup/0,
       fun cleanup/1,
-      [fun put_person/1, fun put_account/1, fun put_transfer/1]
+      [ fun put_account/1, fun put_transfer/1]
      }}.
 
-put_person(_) ->
-    fun() ->
-            Person = #person{id = 15, firstname = <<"Mike">>, surname = <<"Sperber">>},
-            database:put_person(Person),
-            ?assertEqual(database:get_person(15), {ok, Person}),
-            ?assertEqual(database:get_all_persons(), [Person])
-    end.
 
 put_account(_) ->
     fun() ->
-            Account = #account{account_number = 42, person_id = 17, amount = 100 },
+            Account = #account{account_number = 42, firstname="Reza", surname="Fa", amount = 100 },
             database:put_account(Account),
             ?assertEqual(database:get_account(42), {ok, Account}),
             ?assertEqual(database:get_all_accounts(), [Account])
