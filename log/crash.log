@@ -74,3 +74,66 @@ Ranch listener my_http_listener, connection process <0.2179.0>, stream 4 had its
   neighbours:
 2022-06-29 12:22:14 UTC =ERROR REPORT====
 Ranch listener my_http_listener, connection process <0.2271.0>, stream 1 had its request process <0.2272.0> exit with reason {badkey,<<"bank_statement_accountnumber">>} and stacktrace [{erlang,map_get,[<<"bank_statement_accountnumber">>,#{}],[{error_info,#{module => erl_erts_errors}}]},{web_frontend,init,2,[{file,"/workspaces/frobese-2022-bank-statements/src/web_frontend.erl"},{line,301}]},{cowboy_handler,execute,2,[{file,"/workspaces/frobese-2022-bank-statements/_build/default/lib/cowboy/src/cowboy_handler.erl"},{line,37}]},{cowboy_stream_h,execute,3,[{file,"/workspaces/frobese-2022-bank-statements/_build/default/lib/cowboy/src/cowboy_stream_h.erl"},{line,306}]},{cowboy_stream_h,request_process,3,[{file,"/workspaces/frobese-2022-bank-statements/_build/default/lib/cowboy/src/cowboy_stream_h.erl"},{line,295}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]
+2022-06-30 10:10:15 UTC =ERROR REPORT====
+** Generic server bankStatementService terminating 
+** Last message in was reRegister
+** When Server state == ok
+** Reason for termination ==
+** {bad_return_value,ok}
+2022-06-30 10:10:15 UTC =CRASH REPORT====
+  crasher:
+    initial call: eventhandler:init/1
+    pid: <0.317.0>
+    registered_name: bankStatementService
+    exception exit: {{bad_return_value,ok},[{gen_server,handle_common_reply,8,[{file,"gen_server.erl"},{line,815}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}
+    ancestors: [<0.230.0>]
+    message_queue_len: 0
+    messages: []
+    links: [<0.318.0>]
+    dictionary: []
+    trap_exit: false
+    status: running
+    heap_size: 987
+    stack_size: 28
+    reductions: 9602
+  neighbours:
+2022-06-30 10:10:52 UTC =CRASH REPORT====
+  crasher:
+    initial call: eventhandler:init/1
+    pid: <0.274.0>
+    registered_name: []
+    exception error: bad argument: [{dets,lookup,[last_event_count,account_service],[{file,"dets.erl"},{line,1259}]},{database,read_one,3,[{file,"/workspaces/frobese-2022-bank-statements/src/database.erl"},{line,56}]},{database,last_account_service_count,0,[{file,"/workspaces/frobese-2022-bank-statements/src/database.erl"},{line,120}]},{eventhandler,reRegister,0,[{file,"/workspaces/frobese-2022-bank-statements/src/eventhandler.erl"},{line,16}]},{eventhandler,init,1,[{file,"/workspaces/frobese-2022-bank-statements/src/eventhandler.erl"},{line,10}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]
+    ancestors: [<0.230.0>]
+    message_queue_len: 0
+    messages: []
+    links: []
+    dictionary: []
+    trap_exit: false
+    status: running
+    heap_size: 987
+    stack_size: 28
+    reductions: 327
+  neighbours:
+2022-06-30 10:14:32 UTC =ERROR REPORT====
+** Generic server bankStatementService terminating 
+** Last message in was reRegister
+** When Server state == ok
+** Reason for termination ==
+** {bad_return_value,ok}
+2022-06-30 10:14:32 UTC =CRASH REPORT====
+  crasher:
+    initial call: eventhandler:init/1
+    pid: <0.313.0>
+    registered_name: bankStatementService
+    exception exit: {{bad_return_value,ok},[{gen_server,handle_common_reply,8,[{file,"gen_server.erl"},{line,815}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}
+    ancestors: [<0.226.0>]
+    message_queue_len: 0
+    messages: []
+    links: [<0.314.0>]
+    dictionary: []
+    trap_exit: false
+    status: running
+    heap_size: 610
+    stack_size: 28
+    reductions: 652
+  neighbours:

@@ -1,5 +1,5 @@
 -module(eventhandler).
--export([init/1, handle_cast/2,
+-export([init/1, handle_cast/2,handle_info/2,
          start/0]).
 
 -behaviour(gen_server).
@@ -7,7 +7,16 @@
 
 
 init(_) ->
-    {ok, ok}. % Start ist der initiale Wert für N
+    reRegister(),
+    timer:send_interval(1000, reRegister),
+    {ok, ok}. % state is in dets, no real state here
+
+reRegister() ->
+    io:format("reRegister"),
+    gen_server:cast(account_service, {register, self(), database:last_account_service_count()}),
+    gen_server:cast(transfer_service, {register, self(), database:last_transfer_service_count()}).
+
+
 
 start() ->
     gen_server:start(
@@ -18,6 +27,9 @@ start() ->
                     % [{debug,[error]}]         % beispiel für Debug-Funktion
                 ).
 
+handle_info(reRegister, _) ->
+    reRegister(),
+    {noreply, ok}.
 
 handle_cast({account_service, 
             count = Count, 
