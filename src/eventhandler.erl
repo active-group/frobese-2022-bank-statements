@@ -44,7 +44,7 @@ handle_cast({account_service,
         ExpectedCount == Count ->
                 business_logic:account_created(AccNr, Name,Surname,Amount),
                 database:inc_last_account_service_count();
-        true -> true % else-zweig --> TODO: register um die fehlendne zu bekommen
+        true -> reRegister(Nodes) % else-zweig --> register um die fehlendne zu bekommen
     end,
     {noreply,Nodes};
 handle_cast({transfer_service, 
@@ -56,7 +56,7 @@ handle_cast({transfer_service,
         ExpectedCount == Count ->
                 business_logic:transfer_created( Id, FromAccNr,ToAccNr, Amount),
                 database:inc_last_transfer_service_count();
-        true -> true % else-zweig --> TODO: register um die fehlendne zu bekommen
-        end,
+        true -> reRegister(Nodes) % else-zweig --> register um die fehlendne zu bekommen
+    end,
     {noreply,Nodes}.
 
