@@ -315,11 +315,137 @@ init(Req, request_bank_statement) ->
             {ok, Req2, []};
         {false, _} ->
             Req2 = cowboy_req:reply(200, #{<<"content-type">> => <<"text/html">>},
-                                    "Currency not found.<br/>" ++ back_button(), Req),
+            "
+                                    <style>
+                                    body {
+                                      box-sizing: border-box;
+                                      height:96vh;
+                                      background: linear-gradient(8deg, #D62778, #73656B, #19C4BE);
+                                      background-size: 800% 800%;
+                                      animation: GradientBackground 6s ease infinite;
+                                      display: flex;
+                                      flex-direction: column;
+                                      align-items: center;
+                                      justify-content: center;
+                                    }
+
+                                    .container {
+                                      box-sizing: border-box;
+                                      min-width: 400px;
+                                      background-color: #fff;
+                                      padding: 2rem;
+                                      border-radius: 1rem;
+                                      display: flex;
+                                      flex-direction:column;
+                                      align-items: center;
+                                      justify-content: center;
+                                    }
+                                    .btn {
+                                      margin: 0 auto;
+                                      margin-top:2rem;
+                                      padding: 15px 25px;
+                                      border: 0;
+                                      background-color: #000;
+                                      color:#fff;
+                                      border-radius: .5rem;
+                                      transition: .3s all ease;
+                                      cursor: pointer;
+                                      position: relative;
+                                      text-decoration: none;      
+                                      text-align: center; !important
+                                    }
+                                    .btn:hover {
+                                      background-color: #fc6203;
+                                      transition: .3s all ease;
+                                    }
+                                    @keyframes GradientBackground {
+                                      0% {
+                                        background-position: 0% 50%;
+                                      }
+                                    
+                                      50% {
+                                        background-position: 100% 50%;
+                                      }
+                                    
+                                      100% {
+                                        background-position: 0% 50%;
+                                      }
+                                    };
+                                  
+                                  </style>
+                                    <div class='container'>
+                                         <h2>Currency not found.<h2/>
+
+                                    
+                                  
+                                    " ++ back_button() ++ "</div>", Req),
             {ok, Req2, []};
         {_, {error, not_found}} ->
             Req2 = cowboy_req:reply(200, #{<<"content-type">> => <<"text/html">>},
-                                    "Account not found.<br/>" ++ back_button(), Req),
+                                    "
+                                    <style>
+                                    body {
+                                      box-sizing: border-box;
+                                      height:96vh;
+                                      background: linear-gradient(8deg, #D62778, #73656B, #19C4BE);
+                                      background-size: 800% 800%;
+                                      animation: GradientBackground 6s ease infinite;
+                                      display: flex;
+                                      flex-direction: column;
+                                      align-items: center;
+                                      justify-content: center;
+                                    }
+
+                                    .container {
+                                      box-sizing: border-box;
+                                      min-width: 400px;
+                                      background-color: #fff;
+                                      padding: 2rem;
+                                      border-radius: 1rem;
+                                      display: flex;
+                                      flex-direction:column;
+                                      align-items: center;
+                                      justify-content: center;
+                                    }
+                                    .btn {
+                                      margin: 0 auto;
+                                      margin-top:2rem;
+                                      padding: 15px 25px;
+                                      border: 0;
+                                      background-color: #000;
+                                      color:#fff;
+                                      border-radius: .5rem;
+                                      transition: .3s all ease;
+                                      cursor: pointer;
+                                      position: relative;
+                                      text-decoration: none;      
+                                      text-align: center; !important
+                                    }
+                                    .btn:hover {
+                                      background-color: #fc6203;
+                                      transition: .3s all ease;
+                                    }
+                                    @keyframes GradientBackground {
+                                      0% {
+                                        background-position: 0% 50%;
+                                      }
+                                    
+                                      50% {
+                                        background-position: 100% 50%;
+                                      }
+                                    
+                                      100% {
+                                        background-position: 0% 50%;
+                                      }
+                                    };
+                                  
+                                  </style>
+                                    <div class='container'>
+                                         <h2>Account not found.<h2/>
+
+                                    
+                                  
+                                    " ++ back_button() ++ "</div>", Req),
             {ok, Req2, []}
     end;
 
