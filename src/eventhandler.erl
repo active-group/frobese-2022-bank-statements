@@ -34,10 +34,10 @@ handle_info(reRegister, Nodes) ->
     {noreply, Nodes}.
 
 handle_cast({account_service, 
-            count = Count, 
+            Count, 
             create_account,
             {account,  % <--record name
-                            account_number=AccNr, name=Name, surname=Surname, amount=Amount}  
+                            AccNr, Name, Surname, Amount}  
         } , Nodes) ->
     ExpectedCount = database:last_account_service_count() + 1,
     if 
