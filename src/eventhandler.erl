@@ -50,11 +50,11 @@ handle_cast({account_service,
 handle_cast({transfer_service, 
                 Count, 
                 {transferEvent, % <--record name
-                    Id ,FromAccNr, ToAccNr, Amount }} , Nodes) ->
+                    Id , Timestamp, FromAccNr, ToAccNr, Amount }} , Nodes) ->
     ExpectedCount = database:last_transfer_service_count() + 1,
     if 
         ExpectedCount == Count ->
-                business_logic:transfer_created( Id, FromAccNr,ToAccNr, Amount),
+                business_logic:transfer_created( Id, FromAccNr,ToAccNr, Amount, Timestamp),
                 database:inc_last_transfer_service_count();
         true -> reRegister(Nodes) % else-zweig --> register um die fehlendne zu bekommen
     end,
