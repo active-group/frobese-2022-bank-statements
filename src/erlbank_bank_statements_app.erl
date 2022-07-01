@@ -32,14 +32,14 @@ start(_StartType, _StartArgs) ->
     database:init_database(),
 
     check_is_set("ACCOUNTS_HOST"),
-    % check_is_set("TRANSFERS_HOST"),
+    check_is_set("TRANSFERS_HOST"),
 
     lager:info("Starting bank-transfers service: ~p~n", [node()]),
 
     AccountNode = list_to_atom("accounts@" ++ os:getenv("ACCOUNTS_HOST")),
-    % TransferNode = list_to_atom("transfers@" ++ os:getenv("TRANSFERS_HOST")),
+    TransferNode = list_to_atom("transfers@" ++ os:getenv("TRANSFERS_HOST")),
 
-    eventhandler:start(AccountNode, foo),
+    eventhandler:start(AccountNode, TransferNode),
 
     start_cowboy(),
     erlbank_bank_statements_sup:start_link().
